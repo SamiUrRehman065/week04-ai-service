@@ -1,0 +1,2 @@
+﻿IMAGE                      ID             DISK USAGE   CONTENT SIZE   EXTRA
+week04-ai-service:latest   b481a0ff6ab0        236MB         56.8MB        

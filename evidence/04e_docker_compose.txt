@@ -1,0 +1,113 @@
+﻿> docker compose -f deployment/docker-compose.yml config
+name: deployment
+services:
+  ai-service:
+    restart: unless-stopped
+    container_name: week04-ai-service
+    environment:
+      APP_NAME: Week 04 AI Service
+      APP_VERSION: 1.0.0
+      DEBUG: "false"
+    networks:
+      default: null
+    build:
+      context: C:\Users\SamiUrRehman\Downloads\Week04
+      dockerfile: deployment/Dockerfile
+    ports:
+      - mode: ingress
+        target: 8000
+        published: "8000"
+        protocol: tcp
+networks:
+  default:
+    name: deployment_default
+
+> docker compose -f deployment/docker-compose.yml up --build -d
+ Image deployment-ai-service Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 571B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 285B done
+#2 DONE 0.0s
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 3.9s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 136B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 1.76kB 0.0s done
+#6 DONE 0.0s
+
+#7 [1/5] FROM docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1
+#7 resolve docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 0.1s done
+#7 DONE 0.1s
+
+#8 [2/5] WORKDIR /app
+#8 CACHED
+
+#9 [3/5] COPY requirements.txt .
+#9 CACHED
+
+#10 [4/5] RUN pip install --no-cache-dir -r requirements.txt
+#10 CACHED
+
+#11 [5/5] COPY src ./src
+#11 CACHED
+
+#12 exporting to image
+#12 exporting layers done
+#12 exporting manifest sha256:3c5f65835dadf13d492c1c258c53c223d3657519f74b3d36296ff169d6d49790 0.0s done
+#12 exporting config sha256:d5c990f773670ebfacc4c943e1aab658043b5214aa7ea7c34f42262f2dd2f6a4 0.0s done
+#12 exporting attestation manifest sha256:59c2e9713bc9c7af786a269528fb0001ae82dcf4d4c99dd8a7b3f059f9c0b272
+#12 exporting attestation manifest sha256:59c2e9713bc9c7af786a269528fb0001ae82dcf4d4c99dd8a7b3f059f9c0b272 0.0s done
+#12 exporting manifest list sha256:9adbb4121f2b99546b2e65837ad1f358c4bce0039ffce4c9f40dc6579ea5599a 0.0s done
+#12 naming to docker.io/library/deployment-ai-service:latest done
+#12 unpacking to docker.io/library/deployment-ai-service:latest 0.0s done
+#12 DONE 0.2s
+
+#13 resolving provenance for metadata file
+#13 DONE 0.0s
+ Image deployment-ai-service Built 
+ Network deployment_default Creating 
+ Network deployment_default Creating 
+ Network deployment_default Created 
+ Network deployment_default Created 
+ Container week04-ai-service Creating 
+ Container week04-ai-service Created 
+ Container week04-ai-service Starting 
+ Container week04-ai-service Started 
+
+> curl http://127.0.0.1:8000/health
+{"status":"healthy"}
+
+> docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED         STATUS         PORTS                                         NAMES
+8fd7108ea891   deployment-ai-service   "uvicorn ai_service.…"   5 seconds ago   Up 4 seconds   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp   week04-ai-service
+
+> docker logs week04-ai-service
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+2026-10-17 09:17:41,732 | INFO | ai_service | Starting Week 04 AI Service version 1.0.0
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     172.18.0.1:37120 - "GET /health HTTP/1.1" 200 OK
+
+> docker compose -f deployment/docker-compose.yml down
+ Container week04-ai-service Stopping 
+ Container week04-ai-service Stopped 
+ Container week04-ai-service Removing 
+ Container week04-ai-service Removed 
+ Network deployment_default Removing 
+ Network deployment_default Removed 
+
+> docker ps -a --filter name=week04-ai-service
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+

@@ -1,0 +1,19 @@
+﻿> curl http://127.0.0.1:8000/
+{"message":"AI Service is running","version":"1.0.0"}
+> curl http://127.0.0.1:8000/health
+{"status":"healthy"}
+> curl http://127.0.0.1:8000/version
+{"version":"1.0.0"}
+> curl -X POST "http://127.0.0.1:8000/classify?text=I%20forgot%20my%20password"
+{"text":"I forgot my password","category":"account"}
+> curl -X POST "http://127.0.0.1:8000/classify?text=The%20server%20is%20down"
+{"text":"The server is down","category":"technical"}
+> curl -X POST "http://127.0.0.1:8000/classify?text="
+{"detail":"Text cannot be empty."}
+> curl -I http://127.0.0.1:8000/docs
+HTTP/1.1 200 OK
+date: Sat, 17 Oct 2026 08:16:56 GMT
+server: uvicorn
+content-length: 1017
+content-type: text/html; charset=utf-8
+

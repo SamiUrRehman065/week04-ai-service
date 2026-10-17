@@ -1,0 +1,21 @@
+﻿> docker run --rm -p 8000:8000 week04-ai-service  (run detached as -d --name week04-ai-service)
+> curl http://127.0.0.1:8000/health
+{"status":"healthy"}
+> curl -X POST "http://127.0.0.1:8000/classify?text=The%20server%20is%20down"
+{"text":"The server is down","category":"technical"}
+
+> docker ps
+CONTAINER ID   IMAGE               COMMAND                  CREATED         STATUS         PORTS                                         NAMES
+994d8e7b1d75   week04-ai-service   "uvicorn ai_service.…"   5 seconds ago   Up 4 seconds   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp   week04-ai-service
+
+> docker logs week04-ai-service
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+2026-10-17 09:17:20,308 | INFO | ai_service | Starting Week 04 AI Service version 1.0.0
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     172.17.0.1:35924 - "GET /health HTTP/1.1" 200 OK
+2026-10-17 09:17:23,602 | INFO | ai_service | Classifying text
+2026-10-17 09:17:23,602 | INFO | ai_service | Classification completed: technical
+INFO:     172.17.0.1:35938 - "POST /classify?text=The%20server%20is%20down HTTP/1.1" 200 OK
+

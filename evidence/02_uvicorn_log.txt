@@ -1,0 +1,12 @@
+2026-10-17 13:16:53,982 | INFO | ai_service | Starting Week 04 AI Service version 1.0.0
+INFO:     127.0.0.1:49799 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49800 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49801 - "GET /version HTTP/1.1" 200 OK
+2026-10-17 13:16:57,134 | INFO | ai_service | Classifying text
+2026-10-17 13:16:57,136 | INFO | ai_service | Classification completed: account
+INFO:     127.0.0.1:49802 - "POST /classify?text=I%20forgot%20my%20password HTTP/1.1" 200 OK
+2026-10-17 13:16:57,169 | INFO | ai_service | Classifying text
+2026-10-17 13:16:57,171 | INFO | ai_service | Classification completed: technical
+INFO:     127.0.0.1:49803 - "POST /classify?text=The%20server%20is%20down HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49804 - "POST /classify?text= HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:49805 - "HEAD /docs HTTP/1.1" 200 OK
